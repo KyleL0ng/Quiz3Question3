@@ -13,8 +13,8 @@ int main()
     int randNum = 0;
     int userNum = 0;
     bool cont = true;
-    // print menu and get user's choice
-    menuChoice = menu();
+    // print menu and get user's choice (done within loop)
+    printf("Welcome to Guess a Number!\n\n");
 
     // If 1: play game
     //   pick number
@@ -23,33 +23,46 @@ int main()
     //   repeat until successful
     // If 2: change max number
     // If 3: end
-    switch (menuChoice)
+    while (cont)
     {
-    case 1:
-        randNum = randomChoice(maxNum);
-        while (userNum != randNum)
+        menuChoice = menu();
+        switch (menuChoice)
         {
-            printf("Enter your guess:\n");
-            scanf("%d", &userNum);
-            printf("You guessed: %d\n", userNum);
-            if (userNum == randNum) {
-                printf("Correct!");
-            }
-            else {
-                if (userNum < randNum) {
-                    printf("The number is higher\n");
+        case 1:
+            randNum = randomChoice(maxNum);
+            while (userNum != randNum)
+            {
+                printf("Enter your guess:\n");
+                scanf("%d", &userNum);
+                printf("You guessed: %d\n", userNum);
+                if (userNum == randNum)
+                {
+                    printf("Correct!\n");
                 }
-                else if (userNum > randNum) {
-                    printf("The number is lower\n");
-                } //end if
-            } //end if
-        } //end while
-        break;
-    case 2:
-        break;
-    case 3:
-        break;
-    }
+                else
+                {
+                    if (userNum < randNum)
+                    {
+                        printf("The number is higher\n");
+                    }
+                    else if (userNum > randNum)
+                    {
+                        printf("The number is lower\n");
+                    } // end if
+                } // end if
+            } // end while
+            break;
+        case 2:
+            printf("Enter new max number:\n");
+            scanf("%d", &maxNum);
+            printf("The new max number is: %d\n", maxNum);
+            break;
+        case 3:
+            cont = false;
+            printf("Thank you for playing!\n");
+            break;
+        } //end switch
+    } //end while
 
     return EXIT_SUCCESS;
 }
@@ -58,12 +71,6 @@ int menu()
 {
     int choice = 0;
     bool valid = false;
-
-    printf("Welcome to Guess a Number!\n\n");
-    // printf("Press 1 to play a game\n");
-    // printf("Press 2 to change the max number\n");
-    // printf("Press 3 to quit\n");
-    // scanf("%d", &choice);
 
     while (!valid)
     {
@@ -88,7 +95,6 @@ int menu()
         }
     }
 
-    printf("Your choice: %d\n", choice);
     return choice;
 }
 
