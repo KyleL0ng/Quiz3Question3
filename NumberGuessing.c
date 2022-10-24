@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include <string.h>
 
 int menu();
 int randomChoice(int max);
@@ -11,6 +12,9 @@ int main()
     int menuChoice = 0;
     int maxNum = 10;
     int randNum = 0;
+    char guess[10];
+    char quit[10] = "q";
+    char *eptr;
     int userNum = 0;
     bool cont = true;
     // print menu and get user's choice (done within loop)
@@ -33,23 +37,32 @@ int main()
             while (userNum != randNum)
             {
                 printf("Enter your guess:\n");
-                scanf("%d", &userNum);
-                printf("You guessed: %d\n", userNum);
-                if (userNum == randNum)
+                scanf("%s", guess);
+                if (strcmp(guess, quit) == 0)
                 {
-                    printf("Correct!\n");
+                    menuChoice = 3;
+                    break;
                 }
                 else
                 {
-                    if (userNum < randNum)
+                    userNum = strtod(guess, &eptr);
+                    printf("You guessed: %d\n", userNum);
+                    if (userNum == randNum)
                     {
-                        printf("The number is higher\n");
+                        printf("Correct!\n");
                     }
-                    else if (userNum > randNum)
+                    else
                     {
-                        printf("The number is lower\n");
+                        if (userNum < randNum)
+                        {
+                            printf("The number is higher\n");
+                        }
+                        else if (userNum > randNum)
+                        {
+                            printf("The number is lower\n");
+                        } // end if
                     } // end if
-                } // end if
+                } //end if
             } // end while
             break;
         case 2:
@@ -61,8 +74,8 @@ int main()
             cont = false;
             printf("Thank you for playing!\n");
             break;
-        } //end switch
-    } //end while
+        } // end switch
+    }     // end while
 
     return EXIT_SUCCESS;
 }
